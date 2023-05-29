@@ -37,17 +37,15 @@ class minHeap
         void decreaseDistance(int nodeId, int newDistance);
 
         void moveUp(int i);
-
+        
         int getSize();
         int getNumofNodes();
-
-        int *pos; // Position of some node in heap. Index maps to some nodeId. Int at location is location of node within heap array.
-        minHeapNode *array;
+        void printHeap();
 
     private:
         int size = 0;
-        // int pos[127]; // Position of some node in heap. Index maps to some nodeId. Int at location is location of node within heap array.
-        // minHeapNode array[127]{};
+        int *pos; // Position of some node in heap. Index maps to some nodeId. Int at location is location of node within heap array.
+        minHeapNode *array;
         int numOfNodes;
 
         friend class Graph;

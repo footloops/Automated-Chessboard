@@ -18,7 +18,7 @@ minHeapNode::minHeapNode(int origin, int destination ,int distance)
 minHeap::minHeap(int numOfNodes)
 {
     this->numOfNodes = numOfNodes;
-    this->pos = new int[numOfNodes];
+    this->pos = new int[numOfNodes]{};
     this->array = new minHeapNode[numOfNodes]{};
     for (int i = 0; i < 127; ++i)
     {
@@ -35,8 +35,7 @@ minHeap::~minHeap()
 void minHeap::Heapify(int i)
 {
     int smallest = i;
-
-    if (Left(i) <= this->size && this->array[Left(i)].distance < this->array[smallest].distance)
+    if (Left(i) <= this->size && this->array[Left(i)].distance < this->array[smallest].distance )
     {
         smallest = Left(i);
     }
@@ -45,7 +44,7 @@ void minHeap::Heapify(int i)
         smallest = Right(i);
     }
 
-    if (smallest != i)
+    if (smallest != i )
     {
         minHeapNode temp = this->array[i];
 
@@ -69,7 +68,7 @@ void minHeap::moveUp(int i)
     {
         return;
     }
-    if (this->array[parent(i)].distance > this->array[i].distance)
+    if (this->array[parent(i)].distance > this->array[i].distance || this->array[parent(i)].getDist() == -1)
     {
         //swap
         minHeapNode temp = this->array[parent(i)];
@@ -104,7 +103,6 @@ minHeapNode minHeap::extractMin()
     minHeapNode min = this->array[0];
     minHeapNode temp = this->array[0];
 
-
     // Switch last entry and first entry
     this->array[0] = this->array[this->size-1];
     this->array[this->size-1] = temp;
@@ -113,7 +111,7 @@ minHeapNode minHeap::extractMin()
     this->pos[temp.getNodeId()] = 0;
 
     // "Removing" last entry
-    this->array[this->size-1] = minHeapNode();
+    this->array[this->size-1] = minHeapNode(this->array[this->size-1].getNodeId(), -1, -1);
 
     this->size = this->size - 1;
 
@@ -125,7 +123,15 @@ minHeapNode minHeap::extractMin()
 // Assumes newDistance value is always smaller than the current distance at node array[nodeId]
 void minHeap::decreaseDistance(int nodeId, int newDistance)
 {
+    //Find Node
     int index = this->pos[nodeId];
+    // int index = 0;
+    // for (int i = 0; i < this->numOfNodes; ++i)
+    // {
+    //     if (this->array[i].getNodeId() == nodeId){
+    //         index = i;
+    //     }
+    // }
 
     //std::cout << index << std::endl;
 
@@ -133,6 +139,15 @@ void minHeap::decreaseDistance(int nodeId, int newDistance)
 
     moveUp(index);
     return;
+}
+
+void minHeap::printHeap()
+{
+    for (int i = 0; i < this->numOfNodes; i++)
+    {
+        std::cout << this->array[i].getNodeId() << " " << this->array[i].getDist() << " | " << this->pos[i] << std::endl;
+    }
+    std::cout << "Size of Minheap: " << this->size << std::endl;
 }
 
 int minHeap::parent(int i)
@@ -175,21 +190,21 @@ int minHeap::getNumofNodes()
     return this->numOfNodes;
 }
 
-int main() {
-    minHeap heap = minHeap(127);
+// int main() {
+//     minHeap heap = minHeap(127);
     
-    for (int i = 0; i < heap.getNumofNodes(); ++i){
-        heap.heapInsert(i, i+1, 1);
-        std::cout << heap.array[i].getNodeId() << " " << heap.array[i].getDestination() << " " << heap.array[i].getDist() << " " << (i-1)/2 << " | " << heap.pos[i] << std::endl;
-    }
+//     for (int i = 0; i < heap.getNumofNodes(); ++i){
+//         heap.heapInsert(i, i+1, 1);
+//         std::cout << heap.array[i].getNodeId() << " " << heap.array[i].getDestination() << " " << heap.array[i].getDist() << " " << (i-1)/2 << " | " << heap.pos[i] << std::endl;
+//     }
 
-    std::cout << heap.getSize() << std::endl;
+//     std::cout << heap.getSize() << std::endl;
 
-    heap.decreaseDistance(126, 0);
+//     heap.decreaseDistance(126, 0);
 
-    for (int i = 0; i < heap.getNumofNodes(); ++i){
-        std::cout << heap.array[i].getNodeId() << " " << heap.array[i].getDestination() << " " << heap.array[i].getDist() << " " << (i-1)/2 << " | " << heap.pos[i] << std::endl;
-    }
+//     for (int i = 0; i < heap.getNumofNodes(); ++i){
+//         std::cout << heap.array[i].getNodeId() << " " << heap.array[i].getDestination() << " " << heap.array[i].getDist() << " " << (i-1)/2 << " | " << heap.pos[i] << std::endl;
+//     }
 
-    return 0;
-}
+//     return 0;
+// }

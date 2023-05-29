@@ -5,9 +5,10 @@
 class Node
 {  
     public:
-        Node(int nodeId, int weight, int x_coord, int y_coord);
-        int getnodeId();
-        int getWeight();
+        Node();
+        Node(int nodeId, int distance, int x_coord, int y_coord);
+        int getNodeId();
+        int getDistance();
         int getxCoord();
         int getyCoord();
 
@@ -15,7 +16,7 @@ class Node
         int nodeId;
         int x_coord;
         int y_coord;
-        int weight;
+        int distance;
 };
 
 #endif

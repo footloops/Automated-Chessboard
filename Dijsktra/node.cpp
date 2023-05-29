@@ -1,20 +1,28 @@
 #include <iostream>
 #include "node.hpp"
 
-Node::Node(int nodeId, int weight, int x_coord, int y_coord)
+Node::Node()
+{
+    this->nodeId = -1;
+    this->distance = -1;
+    this->x_coord = -1;
+    this->y_coord = -1;
+}
+
+Node::Node(int nodeId, int distance, int x_coord, int y_coord)
 {
     this->nodeId = nodeId;
-    this->weight = weight;
+    this->distance = distance;
     this->x_coord = x_coord;
     this->y_coord = y_coord;
 }
 
-int Node::getWeight()
+int Node::getDistance()
 {
-    return this->weight;
+    return this->distance;
 }
 
-int Node::getnodeId()
+int Node::getNodeId()
 {
     return this->nodeId;
 }
