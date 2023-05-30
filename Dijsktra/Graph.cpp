@@ -59,8 +59,8 @@ void Graph::dijkstra(int startingNode)
     }
 
     //Assign distance of zero to start node.
-    priorityQueue.decreaseDistance(0, 0);
-    this->distArray[0] = 0;
+    priorityQueue.decreaseDistance(startingNode, 0);
+    this->distArray[startingNode] = 0;
 
     priorityQueue.printHeap();
 
@@ -89,6 +89,11 @@ void Graph::dijkstra(int startingNode)
         }
         //priorityQueue.printHeap();
     }
+
+    // for (int i = 0; i < getnumOfNodes(); i++){
+    //     std::cout << this->prevArray[i] << " ";
+    // }
+    // std::cout << std::endl;
 
     return;
 }
@@ -148,13 +153,12 @@ int main(){
     // graph.insertEdge(1, 3, 1, 0, 0, 80, 0);
     // graph.insertEdge(1, 4, 1, 0, 0, 120, 0);
 
-    graph.insertEdge(0, 1, 4, 0, 0, 0, 0);
-    graph.insertEdge(0, 2, 1, 0, 0, 0, 0);
-    graph.insertEdge(1, 2, 2, 0, 0, 0, 0);
-    graph.insertEdge(1, 3, 1, 0, 0, 0, 0);
-    graph.insertEdge(2, 3, 5, 0, 0, 0, 0);
-    graph.insertEdge(3, 4, 3, 0, 0, 0, 0);
-
+    graph.insertEdge(0, 1, 4, 0, 0, 40, 0);
+    graph.insertEdge(0, 2, 1, 0, 0, 80, 0);
+    graph.insertEdge(1, 2, 2, 0, 0, 80, 0);
+    graph.insertEdge(1, 3, 1, 0, 0, 160, 0);
+    graph.insertEdge(2, 3, 5, 80, 0, 160, 0);
+    graph.insertEdge(3, 4, 3, 160, 0, 240, 0);
 
     for (int i = 0; i < 5; ++i){
         for (int j = 0; j < 6; ++j){
@@ -165,7 +169,7 @@ int main(){
 
     //std::cout << graph.getnumOfNodes() << std::endl;
 
-    graph.findShortestPath(0, 4);
+    graph.findShortestPath(1, 4);
 
     std::cout << "Finished Calculating shortest Path" << std::endl;
 

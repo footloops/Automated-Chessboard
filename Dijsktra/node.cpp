@@ -1,5 +1,5 @@
 #include <iostream>
-#include "node.hpp"
+#include "Node.hpp"
 
 Node::Node()
 {
