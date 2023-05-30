@@ -44,33 +44,31 @@ void Graph::insertEdge(int OriginNodeId, int destNodeId, int distance, int origi
     return;
 }
 
-void Graph::dijkstra(int startingNode, int endNode)
+void Graph::dijkstra(int startingNode)
 {
     // Initalize minHeap
-    minHeap priorityQueue = minHeap(5);
-
-    int dist[this->numOfNodes]; // Track distance values from starting node
-    bool visited[this->numOfNodes]{};
+    minHeap priorityQueue = minHeap(this->getnumOfNodes());
 
     // Initally set all nodes in heap to distance inf
     for (int i = 0; i < this->numOfNodes; i++)
     {   
-        dist[i] = INT_MAX;
+        this->distArray[i] = INT_MAX;
+        this->prevArray[i] = -1;
+        this->shortestPath[i] = -1;
         priorityQueue.heapInsert(i, 0, INT_MAX);
     }
 
-    // Assign distance of zero to start node.
+    //Assign distance of zero to start node.
     priorityQueue.decreaseDistance(0, 0);
-    dist[0] = 0;
+    this->distArray[0] = 0;
 
     priorityQueue.printHeap();
 
-    // Visit all nodes whilst the heap is nonempty
-    int count = 0;
-    while (count != 5){
+    //Visit all nodes whilst the heap is nonempty
+    while (priorityQueue.getSize() != 0){
     
         minHeapNode minNode = priorityQueue.extractMin();
-        // Visited all adjacent nodes
+        // Visit all adjacent nodes
         for (int i = 0; i < this->adjListSize[minNode.getNodeId()]; ++i)
         {   
             // Make sure we are not visiting a "null" node
@@ -79,24 +77,48 @@ void Graph::dijkstra(int startingNode, int endNode)
             }
 
             // Decrease distance to all adjacent nodes according to edge weight (distance)
-            int newDistance = this->adjList[minNode.getNodeId()][i].getDistance() + dist[minNode.getNodeId()];
-            //std::cout << this->adjList[minNode.getNodeId()][i].getDistance() << " " << newDistance << " " << minNode.getNodeId() << " " << dist[minNode.getNodeId()] << std::endl;
-            if (newDistance < dist[this->adjList[minNode.getNodeId()][i].getNodeId()]){
-                dist[this->adjList[minNode.getNodeId()][i].getNodeId()] = this->adjList[minNode.getNodeId()][i].getDistance() + minNode.getDist();
+            int newDistance = this->adjList[minNode.getNodeId()][i].getDistance() + this->distArray[minNode.getNodeId()];
+            //std::cout << this->adjList[minNode.getNodeId()][i].getDistance() << " " << newDistance << " " << minNode.getNodeId() << " " << this->distArray[minNode.getNodeId()] << std::endl;
+            if (newDistance < distArray[this->adjList[minNode.getNodeId()][i].getNodeId()]){
+                this->prevArray[this->adjList[minNode.getNodeId()][i].getNodeId()] = minNode.getNodeId();
+
+                this->distArray[this->adjList[minNode.getNodeId()][i].getNodeId()] = this->adjList[minNode.getNodeId()][i].getDistance() + minNode.getDist();
 
                 priorityQueue.decreaseDistance(this->adjList[minNode.getNodeId()][i].getNodeId(), newDistance);
             }
         }
-        
-        priorityQueue.printHeap();
-
-        for (int i = 0; i < this->numOfNodes; ++i){
-            std::cout << dist[i] << " ";
-        }
-        std::cout << std::endl;
-        count++;
+        //priorityQueue.printHeap();
     }
 
+    return;
+}
+
+void Graph::findShortestPath(int startingNode, int endNode)
+{
+    dijkstra(startingNode);
+
+    if (this->distArray[endNode] == INT_MAX){ // Making sure end node is actually reachable
+        return;
+    }
+
+    int counter = 0;
+    for (int i = endNode; i != -1; i = prevArray[i]) // Iterating backwards. When reached -1, we are at starting node.
+    {
+        this->shortestPath[counter] = i; 
+        counter++;
+    }
+
+    // Reverse array
+    int start = 0;
+    int end = this->getnumOfNodes() - 1;
+    while (start < end)
+    {
+        int temp = this->shortestPath[start];
+        this->shortestPath[start] = this->shortestPath[end];
+        this->shortestPath[end] = temp;
+        start++;
+        end--;
+    }
 
     return;
 }
@@ -143,7 +165,15 @@ int main(){
 
     //std::cout << graph.getnumOfNodes() << std::endl;
 
-    graph.dijkstra(0, 0);
+    graph.findShortestPath(0, 4);
+
+    std::cout << "Finished Calculating shortest Path" << std::endl;
+
+    for (int i = 0; i < graph.getnumOfNodes(); ++i)
+    {
+        std::cout << graph.shortestPath[i] << " ";
+    }
+    std::cout << std::endl;
 
     return 0;
 }

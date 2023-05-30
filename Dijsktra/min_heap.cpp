@@ -18,10 +18,11 @@ minHeapNode::minHeapNode(int origin, int destination ,int distance)
 minHeap::minHeap(int numOfNodes)
 {
     this->numOfNodes = numOfNodes;
-    this->pos = new int[numOfNodes]{};
-    this->array = new minHeapNode[numOfNodes]{};
-    for (int i = 0; i < 127; ++i)
+    this->pos = new int[numOfNodes];
+    this->array = new minHeapNode[numOfNodes];
+    for (int i = 0; i < numOfNodes; ++i)
     {
+        this->array[i] = minHeapNode();
         this->pos[i] = -1;
     }
 }
@@ -30,6 +31,8 @@ minHeap::~minHeap()
 {
     delete[] this->pos;
     delete[] this->array;
+    this->pos = nullptr;
+    this->array = nullptr;
 }
 
 void minHeap::Heapify(int i)
