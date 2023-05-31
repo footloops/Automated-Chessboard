@@ -49,6 +49,8 @@ void Graph::dijkstra(int startingNode)
     // Initalize minHeap
     minHeap priorityQueue = minHeap(this->getnumOfNodes());
 
+    this->shortestPathLen = 0; // Resetting value
+
     // Initally set all nodes in heap to distance inf
     for (int i = 0; i < this->numOfNodes; i++)
     {   
@@ -106,24 +108,13 @@ void Graph::findShortestPath(int startingNode, int endNode)
         return;
     }
 
-    int counter = 0;
     for (int i = endNode; i != -1; i = prevArray[i]) // Iterating backwards. When reached -1, we are at starting node.
     {
-        this->shortestPath[counter] = i; 
-        counter++;
+        this->shortestPath[(this->getnumOfNodes() - 1) - this->shortestPathLen] = i; 
+        this->shortestPathLen = this->shortestPathLen + 1;
     }
 
-    // Reverse array
-    int start = 0;
-    int end = this->getnumOfNodes() - 1;
-    while (start < end)
-    {
-        int temp = this->shortestPath[start];
-        this->shortestPath[start] = this->shortestPath[end];
-        this->shortestPath[end] = temp;
-        start++;
-        end--;
-    }
+    
 
     return;
 }
@@ -145,6 +136,9 @@ int Graph::getnumOfNodes()
     return this->numOfNodes;
 }
 
+int Graph::getShortestPathLen(){
+    return this->shortestPathLen;
+}
 
 int main(){
     Graph graph = Graph();
@@ -169,11 +163,11 @@ int main(){
 
     //std::cout << graph.getnumOfNodes() << std::endl;
 
-    graph.findShortestPath(1, 4);
+    graph.findShortestPath(1, 3);
 
     std::cout << "Finished Calculating shortest Path" << std::endl;
 
-    for (int i = 0; i < graph.getnumOfNodes(); ++i)
+    for (int i = graph.getnumOfNodes() - graph.getShortestPathLen(); i < graph.getnumOfNodes(); ++i)
     {
         std::cout << graph.shortestPath[i] << " ";
     }

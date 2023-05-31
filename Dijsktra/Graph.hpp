@@ -11,6 +11,7 @@ class Graph
         void findShortestPath(int startingNode, int endNode);
 
         int getnumOfNodes();
+        int getShortestPathLen();
         
         Node adjList[5][6]{};
         int adjListSize[5]{}; // Keeps track of each adjacency list size (the nested array)
@@ -20,6 +21,7 @@ class Graph
 
     private:
         // Index of array will correspond to origin node. Nested array will contain adjacent nodes
+        int shortestPathLen = 0;
         int numOfNodes = 0;
         //Node **adjlist[127][6];
         //std::vector<minHeapNode> MSToutput = std::vector<minHeapNode>();
