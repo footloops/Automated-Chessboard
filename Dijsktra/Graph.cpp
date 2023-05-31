@@ -114,7 +114,22 @@ void Graph::findShortestPath(int startingNode, int endNode)
         this->shortestPathLen = this->shortestPathLen + 1;
     }
 
-    
+    for (int i = 0; i < this->getShortestPathLen()-1; i++){
+        // Find node in list
+        if (this->shortestPath[i] == -1){
+            continue;
+        }
+        for (int j = 0; j < this->adjListSize[this->shortestPath[i]]; j++){
+            if (this->adjList[this->shortestPath[i]][j].getNodeId() == this->shortestPath[i+1]){
+                this->temp[i+1] = this->adjList[this->shortestPath[i]][j];
+                for (int x = 0; x < this->adjListSize[this->shortestPath[i+1]]; ++x){
+                    if (this->adjList[this->shortestPath[i+1]][x].getNodeId() == this->shortestPath[i]){
+                        this->temp[i] = this->adjList[this->shortestPath[i+1]][j];
+                    }
+                }
+            }
+        }
+    }
 
     return;
 }
@@ -170,6 +185,11 @@ int main(){
     for (int i = graph.getnumOfNodes() - graph.getShortestPathLen(); i < graph.getnumOfNodes(); ++i)
     {
         std::cout << graph.shortestPath[i] << " ";
+    }
+    std::cout << std::endl;
+
+    for (int i = 0; i < graph.getnumOfNodes(); ++i){
+        std::cout << graph.temp[i].getNodeId() << " ";
     }
     std::cout << std::endl;
 

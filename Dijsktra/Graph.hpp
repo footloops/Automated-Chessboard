@@ -18,6 +18,7 @@ class Graph
         int shortestPath[5];   // Path of nodes to traverse to get from source node to destination node
         int distArray[5]{}; // Track distance values from starting node
         int prevArray[5]{}; // Tracks the index of the node you took to get to some node i
+        Node temp [5]{};
 
     private:
         // Index of array will correspond to origin node. Nested array will contain adjacent nodes
