@@ -5,15 +5,13 @@ class minHeapNode
 {   
     public:
         minHeapNode();
-        minHeapNode(int origin, int destination ,int weight);
+        minHeapNode(int origin, int weight);
         int getNodeId();
         int getDist();
-        int getDestination();
     
     private:
         int nodeId;
         int distance;
-        int destination;
 
     friend class minHeap;
     friend class Graph;
@@ -30,7 +28,7 @@ class minHeap
         int Right(int i);
 
         void Heapify(int i);
-        void heapInsert(int stationNum, int destination, int distance);
+        void heapInsert(int nodeId, int distance);
         minHeapNode extractMin();
         void decreaseDistance(int nodeId, int newDistance);
 

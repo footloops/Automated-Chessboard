@@ -6,7 +6,7 @@ class Node
 {  
     public:
         Node();
-        Node(int nodeId, int distance, int x_coord, int y_coord);
+        Node(int nodeId, int distance);
         int getNodeId();
         int getDistance();
         int getxCoord();

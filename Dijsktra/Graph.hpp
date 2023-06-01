@@ -1,11 +1,13 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 #include "Node.hpp"
+#include "Pair.h"
 
 class Graph
 {
     public:
-        void insertEdge(int nodeId, int destNodeId, int distance, int origin_x_coord, int origin_y_coord, int dest_x_coord, int dest_y_coord);
+        //Graph();
+        void insertEdge(int nodeId, int destNodeId, int distance);
         void print(int a);
         void dijkstra(int startingNode);
         void findShortestPath(int startingNode, int endNode);
@@ -13,12 +15,11 @@ class Graph
         int getnumOfNodes();
         int getShortestPathLen();
         
-        Node adjList[5][6]{};
-        int adjListSize[5]{}; // Keeps track of each adjacency list size (the nested array)
-        int shortestPath[5];   // Path of nodes to traverse to get from source node to destination node
-        int distArray[5]{}; // Track distance values from starting node
-        int prevArray[5]{}; // Tracks the index of the node you took to get to some node i
-        Node temp [5]{};
+        Node adjList[8][6]{};
+        int adjListSize[8]{}; // Keeps track of each adjacency list size (the nested array)
+        int shortestPath[8];   // Path of nodes to traverse to get from source node to destination node.
+        int distArray[8]{}; // Track distance values from starting node
+        int prevArray[8]{}; // Tracks the index of the node you took to get to some node i
 
     private:
         // Index of array will correspond to origin node. Nested array will contain adjacent nodes

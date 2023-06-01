@@ -3,35 +3,29 @@
 
 minHeapNode::minHeapNode()
 {
-    this->destination = -1;
     this->nodeId = -1;
     this->distance = -1;
 }
 
-minHeapNode::minHeapNode(int origin, int destination ,int distance)
+minHeapNode::minHeapNode(int origin, int distance)
 {
     this->distance = distance; // Node value
     this->nodeId = origin;
-    this->destination = destination;
 }
 
 minHeap::minHeap(int numOfNodes)
 {
     this->numOfNodes = numOfNodes;
-    this->pos = new int[numOfNodes];
     this->array = new minHeapNode[numOfNodes];
     for (int i = 0; i < numOfNodes; ++i)
     {
         this->array[i] = minHeapNode();
-        this->pos[i] = -1;
     }
 }
 
 minHeap::~minHeap()
 {
-    delete[] this->pos;
     delete[] this->array;
-    this->pos = nullptr;
     this->array = nullptr;
 }
 
@@ -52,9 +46,6 @@ void minHeap::Heapify(int i)
         minHeapNode temp = this->array[i];
 
         //Swapping nodes in heap
-        this->pos[array[smallest].getNodeId()] = i;
-        this->pos[array[i].getNodeId()] = smallest;
-
         this->array[i] = this->array[smallest];
         this->array[smallest] = temp;
 
@@ -75,8 +66,6 @@ void minHeap::moveUp(int i)
     {
         //swap
         minHeapNode temp = this->array[parent(i)];
-        this->pos[array[parent(i)].getNodeId()] = i;
-        this->pos[array[i].getNodeId()] = parent(i);
 
         this->array[parent(i)] = this->array[i];
         this->array[i] = temp;
@@ -85,15 +74,14 @@ void minHeap::moveUp(int i)
     moveUp(parent(i));
 }
 
-void minHeap::heapInsert(int nodeId, int destination, int distance)
+void minHeap::heapInsert(int nodeId, int distance)
 {   
     if (this->size > 127) {
         std::cout << "Inserted too many nodes" << std::endl;
         return;
     }
 
-    this->array[this->size] = minHeapNode(nodeId, destination, distance);
-    this->pos[nodeId] = this->size; 
+    this->array[this->size] = minHeapNode(nodeId, distance);
 
     moveUp(this->size);
     this->size = this->size + 1;
@@ -104,17 +92,13 @@ void minHeap::heapInsert(int nodeId, int destination, int distance)
 minHeapNode minHeap::extractMin()
 {
     minHeapNode min = this->array[0];
-    minHeapNode temp = this->array[0];
 
     // Switch last entry and first entry
-    this->array[0] = this->array[this->size-1];
-    this->array[this->size-1] = temp;
-
-    this->pos[0] = this->pos[this->size-1];
-    this->pos[temp.getNodeId()] = 0;
+    this->array[0] = this->array[this->size];
+    this->array[this->size] = min;
 
     // "Removing" last entry
-    this->array[this->size-1] = minHeapNode(this->array[this->size-1].getNodeId(), -1, -1);
+    this->array[this->size-1] = minHeapNode(this->array[this->size-1].getNodeId(), -1);
 
     this->size = this->size - 1;
 
@@ -127,16 +111,13 @@ minHeapNode minHeap::extractMin()
 void minHeap::decreaseDistance(int nodeId, int newDistance)
 {
     //Find Node
-    int index = this->pos[nodeId];
-    // int index = 0;
-    // for (int i = 0; i < this->numOfNodes; ++i)
-    // {
-    //     if (this->array[i].getNodeId() == nodeId){
-    //         index = i;
-    //     }
-    // }
-
-    //std::cout << index << std::endl;
+    int index = 0;
+    for (int i = 0; i < this->numOfNodes; ++i)
+    {
+        if (this->array[i].getNodeId() == nodeId){
+            index = i;
+        }
+    }
 
     this->array[index].distance = newDistance;
 
@@ -148,7 +129,7 @@ void minHeap::printHeap()
 {
     for (int i = 0; i < this->numOfNodes; i++)
     {
-        std::cout << this->array[i].getNodeId() << " " << this->array[i].getDist() << " | " << this->pos[i] << std::endl;
+        std::cout << this->array[i].getNodeId() << " " << this->array[i].getDist() << std::endl;
     }
     std::cout << "Size of Minheap: " << this->size << std::endl;
 }
@@ -176,11 +157,6 @@ int minHeap::getSize()
 int minHeapNode::getNodeId()
 {
     return this->nodeId;
-}
-
-int minHeapNode::getDestination()
-{
-    return this->destination;
 }
 
 int minHeapNode::getDist()
