@@ -98,9 +98,9 @@ void Graph::dijkstra(int startingNode)
         //priorityQueue.printHeap();
     }
 
-    // for (int i : this->distArray){
-    //     std::cout << i << std::endl;
-    // }
+    for (int i : this->distArray){
+        std::cout << i << std::endl;
+    }
 
     return;
 }
@@ -150,17 +150,14 @@ int main(){
     // graph.insertEdge(1, 3, 1, 0, 0, 80, 0);
     // graph.insertEdge(1, 4, 1, 0, 0, 120, 0);
 
-    graph.insertEdge(0, 1, 3);
-    graph.insertEdge(0, 2, 5);
-    graph.insertEdge(0, 3, 5);
-    graph.insertEdge(1, 3, 3);
-    graph.insertEdge(1, 5, 6);
-    graph.insertEdge(1, 6, 9);
-    graph.insertEdge(2, 4, 1);
-    graph.insertEdge(3, 7, 4);
-    graph.insertEdge(4, 6, 8);
-    graph.insertEdge(5, 7, 1);
-    graph.insertEdge(6, 7, 2);
+    graph.insertEdge(0, 1, 8);
+    graph.insertEdge(0, 4, 2);
+    graph.insertEdge(1, 5, 4);
+    graph.insertEdge(2, 5, 2);
+    graph.insertEdge(3, 7, 7);
+    graph.insertEdge(4, 6, 2);
+    graph.insertEdge(5, 7, 9);
+    graph.insertEdge(6, 7, 6);
 
     // graph.insertEdge(0, 1, 4);
     // graph.insertEdge(0, 2, 1);

@@ -1,7 +1,6 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 #include "Node.hpp"
-#include "Pair.h"
 
 class Graph
 {
