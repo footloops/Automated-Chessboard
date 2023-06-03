@@ -11,6 +11,7 @@ class Graph
         void dijkstra(int startingNode);
         void findShortestPath(int startingNode, int endNode);
         void setNodeAsOcupied(int nodeId);
+        void setNodeAsEmpty(int nodeId);
 
         int getnumOfNodes();
         int getShortestPathLen();
