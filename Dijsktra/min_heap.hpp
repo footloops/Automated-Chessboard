@@ -40,7 +40,6 @@ class minHeap
 
     private:
         int size = 0;
-        int *pos; // Position of some node in heap. Index maps to some nodeId. Int at location is location of node within heap array.
         minHeapNode *array;
         int numOfNodes;
 

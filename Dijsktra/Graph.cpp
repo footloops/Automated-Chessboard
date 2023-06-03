@@ -94,7 +94,7 @@ void Graph::dijkstra(int startingNode)
     priorityQueue.decreaseDistance(startingNode, 0);
     this->distArray[startingNode] = 0;
 
-    priorityQueue.printHeap();
+    //priorityQueue.printHeap();
 
     //Visit all nodes whilst the heap is nonempty
     while (priorityQueue.getSize() != 0){ 
@@ -121,9 +121,7 @@ void Graph::dijkstra(int startingNode)
         //priorityQueue.printHeap();
     }
 
-    for (int i : this->distArray){
-        std::cout << i << std::endl;
-    }
+    std::cout << "Test" << std::endl;
 
     return;
 }
@@ -133,6 +131,7 @@ void Graph::findShortestPath(int startingNode, int endNode)
     dijkstra(startingNode);
 
     if (this->distArray[endNode] == INT_MAX){ // Making sure end node is actually reachable
+        std::cout << "Cannot compute shortest path: End node is occupied" << std::endl;
         return;
     }
 
@@ -235,6 +234,14 @@ int main(){
         std::cout << std::endl;
     }
 
+    graph.setNodeAsOcupied(9);
+
+    graph.findShortestPath(0, 63);
+    for (int i = graph.getnumOfNodes() - graph.getShortestPathLen(); i < graph.getnumOfNodes(); ++i)
+    {
+        std::cout << graph.shortestPath[i] << " ";
+    }
+    std::cout << std::endl;
 
     return 0;
 }

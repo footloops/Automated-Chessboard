@@ -76,7 +76,7 @@ void minHeap::moveUp(int i)
 
 void minHeap::heapInsert(int nodeId, int distance)
 {   
-    if (this->size > 127) {
+    if (this->size > this->getNumofNodes()) {
         std::cout << "Inserted too many nodes" << std::endl;
         return;
     }
@@ -168,22 +168,3 @@ int minHeap::getNumofNodes()
 {
     return this->numOfNodes;
 }
-
-// int main() {
-//     minHeap heap = minHeap(127);
-    
-//     for (int i = 0; i < heap.getNumofNodes(); ++i){
-//         heap.heapInsert(i, i+1, 1);
-//         std::cout << heap.array[i].getNodeId() << " " << heap.array[i].getDestination() << " " << heap.array[i].getDist() << " " << (i-1)/2 << " | " << heap.pos[i] << std::endl;
-//     }
-
-//     std::cout << heap.getSize() << std::endl;
-
-//     heap.decreaseDistance(126, 0);
-
-//     for (int i = 0; i < heap.getNumofNodes(); ++i){
-//         std::cout << heap.array[i].getNodeId() << " " << heap.array[i].getDestination() << " " << heap.array[i].getDist() << " " << (i-1)/2 << " | " << heap.pos[i] << std::endl;
-//     }
-
-//     return 0;
-// }
