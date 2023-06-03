@@ -76,7 +76,7 @@ void minHeap::moveUp(int i)
 
 void minHeap::heapInsert(int nodeId, int distance)
 {   
-    if (this->size > this->getNumofNodes()) {
+    if (this->size > 127) {
         std::cout << "Inserted too many nodes" << std::endl;
         return;
     }
@@ -134,37 +134,56 @@ void minHeap::printHeap()
     std::cout << "Size of Minheap: " << this->size << std::endl;
 }
 
-int minHeap::parent(int i)
+short minHeap::parent(int i)
 {
     return ( (i-1)/2);
 }
 
-int minHeap::Left(int i)
+short minHeap::Left(int i)
 {
     return (2*i + 1);
 }
 
-int minHeap::Right(int i)
+short minHeap::Right(int i)
 {
     return (2*i + 2);
 }
 
-int minHeap::getSize()
+short minHeap::getSize()
 {
     return this->size;
 }
 
-int minHeapNode::getNodeId()
+short minHeapNode::getNodeId()
 {
     return this->nodeId;
 }
 
-int minHeapNode::getDist()
+short minHeapNode::getDist()
 {
     return this->distance;
 }
 
-int minHeap::getNumofNodes()
+short minHeap::getNumofNodes()
 {
     return this->numOfNodes;
 }
+
+// int main() {
+//     minHeap heap = minHeap(127);
+    
+//     for (int i = 0; i < heap.getNumofNodes(); ++i){
+//         heap.heapInsert(i, i+1, 1);
+//         std::cout << heap.array[i].getNodeId() << " " << heap.array[i].getDestination() << " " << heap.array[i].getDist() << " " << (i-1)/2 << " | " << heap.pos[i] << std::endl;
+//     }
+
+//     std::cout << heap.getSize() << std::endl;
+
+//     heap.decreaseDistance(126, 0);
+
+//     for (int i = 0; i < heap.getNumofNodes(); ++i){
+//         std::cout << heap.array[i].getNodeId() << " " << heap.array[i].getDestination() << " " << heap.array[i].getDist() << " " << (i-1)/2 << " | " << heap.pos[i] << std::endl;
+//     }
+
+//     return 0;
+// }

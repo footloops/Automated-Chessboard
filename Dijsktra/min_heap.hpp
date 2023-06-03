@@ -6,12 +6,12 @@ class minHeapNode
     public:
         minHeapNode();
         minHeapNode(int origin, int weight);
-        int getNodeId();
-        int getDist();
+        short getNodeId();
+        short getDist();
     
     private:
-        int nodeId;
-        int distance;
+        short nodeId;
+        short distance;
 
     friend class minHeap;
     friend class Graph;
@@ -23,9 +23,9 @@ class minHeap
         minHeap(int numOfNodes);
         ~minHeap();
 
-        int parent(int i);
-        int Left(int i);
-        int Right(int i);
+        short parent(int i);
+        short Left(int i);
+        short Right(int i);
 
         void Heapify(int i);
         void heapInsert(int nodeId, int distance);
@@ -34,14 +34,14 @@ class minHeap
 
         void moveUp(int i);
         
-        int getSize();
-        int getNumofNodes();
+        short getSize();
+        short getNumofNodes();
         void printHeap();
 
     private:
-        int size = 0;
+        short size = 0;
         minHeapNode *array;
-        int numOfNodes;
+        short numOfNodes;
 
         friend class Graph;
 };

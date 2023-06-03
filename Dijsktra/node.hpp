@@ -7,16 +7,16 @@ class Node
     public:
         Node();
         Node(int nodeId, int distance);
-        int getNodeId();
-        int getDistance();
+        short getNodeId();
+        short getDistance();
         // int getxCoord();
         // int getyCoord();
 
     private:
-        int nodeId;
+        short nodeId;
         // int x_coord;
         // int y_coord;
-        int distance;
+        short distance;
 
     friend class Graph;
 };

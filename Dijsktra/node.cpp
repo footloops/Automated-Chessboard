@@ -17,12 +17,12 @@ Node::Node(int nodeId, int distance)
     // this->y_coord = y_coord;
 }
 
-int Node::getDistance()
+short Node::getDistance()
 {
     return this->distance;
 }
 
-int Node::getNodeId()
+short Node::getNodeId()
 {
     return this->nodeId;
 }
