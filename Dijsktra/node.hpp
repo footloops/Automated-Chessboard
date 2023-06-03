@@ -9,14 +9,16 @@ class Node
         Node(int nodeId, int distance);
         int getNodeId();
         int getDistance();
-        int getxCoord();
-        int getyCoord();
+        // int getxCoord();
+        // int getyCoord();
 
     private:
         int nodeId;
-        int x_coord;
-        int y_coord;
+        // int x_coord;
+        // int y_coord;
         int distance;
+
+    friend class Graph;
 };
 
 #endif
