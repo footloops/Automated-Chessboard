@@ -3,34 +3,52 @@
 #include "min_heap.hpp"
 #include <limits.h>
 
-// Assuming 64 Nodes (1 node in each tile)
+// // Assuming 113 Nodes (1 node in center of tile, and 4 nodes on each corner of tile. No nodes on edges of chessboard)
 Graph::Graph()
 {
     int counter = 0;
     for (int y = 0; y < 8; y++){
-        for (int x = 0; x < 7; x++){
+        for (int x = 0; x < 8; x++){
+            //std::cout << counter << std::endl;
             // Horizontal edges
-            insertEdge(counter, counter + 1, 1);
-            if (counter + 8 < 63){ // Ensure we do not go out of array bounds!
-                // Vertical edges
-                insertEdge(counter, counter + 8, 1);
-                if (x == 6){
-                    insertEdge(counter+1, counter + 9, 1); // Very far left edges
+            if (x < 7){
+                this->insertEdge(counter, counter + 1, 1);
+                if (x < 6){
+                    if (counter + 9 < 113){
+                        this->insertEdge(counter + 8, counter + 9, 2);
+                    }
                 }
             }
 
-            // Diagonals
-            
-            if (y < 7){
-                //std::cout << counter << std::endl;
-                insertEdge(counter, counter + 9, 1);
-                insertEdge(counter+1, counter + 8, 1);
+            // Vertical corner node connections
+            if ( y < 7 ){
+                if (counter + 23 < 113){
+                    this->insertEdge(counter + 8, counter + 23, 2);
+                }   
             }
+
+            // Vertical Edges
+            if (counter + 15 < 113){
+                this->insertEdge(counter, counter + 15, 1);
+            }
+            
+            //Diagonals
+            if ( y < 7 && x < 7){
+                // Topright
+                this->insertEdge(counter, counter + 8, 1);
+                //Topleft
+                this->insertEdge(counter+1, counter + 8, 1);
+                if (counter + 15 < 113){
+                    // Bottomright
+                    this->insertEdge(counter+15, counter + 8, 1);
+                    this->insertEdge(counter+16, counter + 8, 1);
+                }
+            }
+
             counter++;
         }
-        counter++;
+        counter = counter + 7;
     }
-
 }
 
 void Graph::insertEdge(int OriginNodeId, int destNodeId, int distance)
@@ -46,14 +64,14 @@ void Graph::insertEdge(int OriginNodeId, int destNodeId, int distance)
         return;
     }
 
-    // Check if edge already exists
-    for (int i = 0; i < 8; ++i){
-        if (adjList[OriginNodeId][i].getNodeId() == destNodeId)
-        {
-            std::cout << "Failure to Insert: Edge Already exists" << std::endl;
-            return;
-        }
-    }
+    // // Check if edge already exists
+    // for (int i = 0; i < 8; ++i){
+    //     if (adjList[OriginNodeId][i].getNodeId() == destNodeId)
+    //     {
+    //         std::cout << "Failure to Insert: Edge Already exists" << std::endl;
+    //         return;
+    //     }
+    // }
 
     // Increasing numOfNodes counter
     if (adjListSize[OriginNodeId] == 0 && adjListSize[destNodeId] == 0)
@@ -145,8 +163,14 @@ void Graph::findShortestPath(int startingNode, int endNode)
     return;
 }
 
-void Graph::setNodeAsOcupied(int nodeId)
+void Graph::setNodeAsOccupied(char column, short row)
 {
+    // Determining Node id based on column and row.
+    // Converting column char to an integer representation
+    short columnNum = 72 - int(column);
+    row = 15 * (8 - row);
+    short nodeId = columnNum + row;
+
     for (int i = 0; i < this->adjListSize[nodeId]; ++i){
         this->adjList[nodeId][i].distance = SHRT_MAX;
 
@@ -160,8 +184,12 @@ void Graph::setNodeAsOcupied(int nodeId)
     return;
 }
 
-void Graph::setNodeAsEmpty(int nodeId)
+void Graph::setNodeAsEmpty(char column, short row)
 {
+    short columnNum = 72 - int(column);
+    row = 15 * (8 - row);
+    short nodeId = columnNum + row;
+
     for (int i = 0; i < this->adjListSize[nodeId]; ++i){
         this->adjList[nodeId][i].distance = 1;
 
@@ -196,77 +224,34 @@ int Graph::getShortestPathLen(){
     return this->shortestPathLen;
 }
 
-// int main(){
-//     Graph graph = Graph();
-    
-//     // graph.insertEdge(1, 2, 1, 0, 0, 40, 0);
-//     // graph.insertEdge(1, 3, 1, 0, 0, 80, 0);
-//     // graph.insertEdge(1, 4, 1, 0, 0, 120, 0);
+int main(){
+    Graph graph = Graph();
 
-//     // graph.insertEdge(0, 1, 8);
-//     // graph.insertEdge(0, 4, 2);
-//     // graph.insertEdge(1, 5, 4);
-//     // graph.insertEdge(2, 5, 2);
-//     // graph.insertEdge(3, 7, 7);
-//     // graph.insertEdge(4, 6, 2);
-//     // graph.insertEdge(5, 7, 9);
-//     // graph.insertEdge(6, 7, 6);
+    for (int i = 0; i < 113; ++i){
+        std::cout << i << " | ";
+        for (int j = 0; j < 8; ++j){
+            std::cout << graph.adjList[i][j].getNodeId() << " " << graph.adjList[i][j].getDistance() << " | ";
+        }
+        std::cout << std::endl;
+    }
 
-//     // graph.insertEdge(0, 1, 4);
-//     // graph.insertEdge(0, 2, 1);
-//     // graph.insertEdge(1, 2, 2);
-//     // graph.insertEdge(1, 3, 1);
-//     // graph.insertEdge(2, 3, 5);
-//     // graph.insertEdge(3, 4, 3);
+    graph.setNodeAsOccupied('A', 1);
+    //graph.setNodeAsOcupied(8);
 
-//     // for (int i = 0; i < 8; ++i){
-//     //     for (int j = 0; j < 6; ++j){
-//     //         std::cout << graph.adjList[i][j].getNodeId() << " " << graph.adjList[i][j].getDistance() << " | ";
-//     //     }
-//     //     std::cout << std::endl;
-//     // }
+    for (int i = 0; i < 113; ++i){
+        std::cout << i << " | ";
+        for (int j = 0; j < 8; ++j){
+            std::cout << graph.adjList[i][j].getNodeId() << " " << graph.adjList[i][j].getDistance() << " | ";
+        }
+        std::cout << std::endl;
+    }
 
-//     //std::cout << graph.getnumOfNodes() << std::endl;
+    graph.findShortestPath(0, 24);
+    for (int i = graph.getnumOfNodes() - graph.getShortestPathLen(); i < graph.getnumOfNodes(); ++i)
+    {
+        std::cout << graph.shortestPath[i] << " ";
+    }
+    std::cout << std::endl;
 
-// //     graph.findShortestPath(0, 7);
-
-// //     std::cout << "Finished Calculating shortest Path" << std::endl;
-// //     //std::cout << graph.getnumOfNodes() - graph.getShortestPathLen() << std::endl;
-
-// // // graph.getnumOfNodes() - graph.getShortestPathLen()
-// //     for (int i = graph.getnumOfNodes() - graph.getShortestPathLen(); i < graph.getnumOfNodes(); ++i)
-// //     {
-// //         std::cout << graph.shortestPath[i] << " ";
-// //     }
-// //     std::cout << std::endl;
-
-// //     graph.setNodeAsOcupied(1);
-
-//     for (int i = 0; i < 64; ++i){
-//         std::cout << i << " | ";
-//         for (int j = 0; j < 8; ++j){
-//             std::cout << graph.adjList[i][j].getNodeId() << " " << graph.adjList[i][j].getDistance() << " | ";
-//         }
-//         std::cout << std::endl;
-//     }
-
-//     graph.setNodeAsOcupied(1);
-//     //graph.setNodeAsOcupied(8);
-
-//     for (int i = 0; i < 64; ++i){
-//         std::cout << i << " | ";
-//         for (int j = 0; j < 8; ++j){
-//             std::cout << graph.adjList[i][j].getNodeId() << " " << graph.adjList[i][j].getDistance() << " | ";
-//         }
-//         std::cout << std::endl;
-//     }
-
-//     graph.findShortestPath(0, 63);
-//     for (int i = graph.getnumOfNodes() - graph.getShortestPathLen(); i < graph.getnumOfNodes(); ++i)
-//     {
-//         std::cout << graph.shortestPath[i] << " ";
-//     }
-//     std::cout << std::endl;
-
-//     return 0;
-// }
+    return 0;
+}

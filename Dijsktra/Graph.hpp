@@ -10,17 +10,17 @@ class Graph
         void print(int a);
         void dijkstra(int startingNode);
         void findShortestPath(int startingNode, int endNode);
-        void setNodeAsOcupied(int nodeId);
-        void setNodeAsEmpty(int nodeId);
+        void setNodeAsOccupied(char column, short row);
+        void setNodeAsEmpty(char column, short row);
 
         int getnumOfNodes();
         int getShortestPathLen();
         
-        Node adjList[64][8]{};
-        short adjListSize[64]{}; // Keeps track of each adjacency list size (the nested array)
-        short shortestPath[64];   // Path of nodes to traverse to get from source node to destination node.
-        unsigned short distArray[64]{}; // Track distance values from starting node
-        short prevArray[64]{}; // Tracks the index of the node you took to get to some node i
+        Node adjList[113][8]{};
+        short adjListSize[113]{}; // Keeps track of each adjacency list size (the nested array)
+        short shortestPath[113];   // Path of nodes to traverse to get from source node to destination node.
+        unsigned int distArray[113]{}; // Track distance values from starting node
+        short prevArray[113]{}; // Tracks the index of the node you took to get to some node i
 
     private:
         // Index of array will correspond to origin node. Nested array will contain adjacent nodes

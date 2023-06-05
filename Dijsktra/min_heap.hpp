@@ -11,7 +11,7 @@ class minHeapNode
     
     private:
         short nodeId;
-        short distance;
+        unsigned int distance;
 
     friend class minHeap;
     friend class Graph;

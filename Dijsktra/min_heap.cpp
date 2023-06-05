@@ -76,7 +76,7 @@ void minHeap::moveUp(int i)
 
 void minHeap::heapInsert(int nodeId, int distance)
 {   
-    if (this->size > 127) {
+    if (this->size > this->numOfNodes) {
         std::cout << "Inserted too many nodes" << std::endl;
         return;
     }
