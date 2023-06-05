@@ -9,7 +9,12 @@ Graph::Graph()
     int counter = 0;
     for (int y = 0; y < 8; y++){
         for (int x = 0; x < 8; x++){
-            //std::cout << counter << std::endl;
+            // Setting default chess tiles to occupied.
+            if ( y < 2 || y > 5){
+                this->setNodeAsOccupied( 72 - x, 8-y );
+                //std::cout << char(72 - x) << " " << 8 - y << std::endl;
+            }
+
             // Horizontal edges
             if (x < 7){
                 this->insertEdge(counter, counter + 1, 1);
@@ -170,6 +175,7 @@ void Graph::setNodeAsOccupied(char column, short row)
     short columnNum = 72 - int(column);
     row = 15 * (8 - row);
     short nodeId = columnNum + row;
+    std::cout << nodeId << std::endl;
 
     for (int i = 0; i < this->adjListSize[nodeId]; ++i){
         this->adjList[nodeId][i].distance = SHRT_MAX;
@@ -224,34 +230,34 @@ int Graph::getShortestPathLen(){
     return this->shortestPathLen;
 }
 
-int main(){
-    Graph graph = Graph();
+// int main(){
+//     Graph graph = Graph();
 
-    for (int i = 0; i < 113; ++i){
-        std::cout << i << " | ";
-        for (int j = 0; j < 8; ++j){
-            std::cout << graph.adjList[i][j].getNodeId() << " " << graph.adjList[i][j].getDistance() << " | ";
-        }
-        std::cout << std::endl;
-    }
+//     for (int i = 0; i < 113; ++i){
+//         std::cout << i << " | ";
+//         for (int j = 0; j < 8; ++j){
+//             std::cout << graph.adjList[i][j].getNodeId() << " " << graph.adjList[i][j].getDistance() << " | ";
+//         }
+//         std::cout << std::endl;
+//     }
 
-    graph.setNodeAsOccupied('A', 1);
-    //graph.setNodeAsOcupied(8);
+//     //graph.setNodeAsOccupied('F', 1);
+//     //graph.setNodeAsOcupied(8);
 
-    for (int i = 0; i < 113; ++i){
-        std::cout << i << " | ";
-        for (int j = 0; j < 8; ++j){
-            std::cout << graph.adjList[i][j].getNodeId() << " " << graph.adjList[i][j].getDistance() << " | ";
-        }
-        std::cout << std::endl;
-    }
+//     // for (int i = 0; i < 113; ++i){
+//     //     std::cout << i << " | ";
+//     //     for (int j = 0; j < 8; ++j){
+//     //         std::cout << graph.adjList[i][j].getNodeId() << " " << graph.adjList[i][j].getDistance() << " | ";
+//     //     }
+//     //     std::cout << std::endl;
+//     // }
 
-    graph.findShortestPath(0, 24);
-    for (int i = graph.getnumOfNodes() - graph.getShortestPathLen(); i < graph.getnumOfNodes(); ++i)
-    {
-        std::cout << graph.shortestPath[i] << " ";
-    }
-    std::cout << std::endl;
+//     // graph.findShortestPath(0, 24);
+//     // for (int i = graph.getnumOfNodes() - graph.getShortestPathLen(); i < graph.getnumOfNodes(); ++i)
+//     // {
+//     //     std::cout << graph.shortestPath[i] << " ";
+//     // }
+//     // std::cout << std::endl;
 
-    return 0;
-}
+//     return 0;
+// }
