@@ -54,6 +54,33 @@ Graph::Graph()
         }
         counter = counter + 7;
     }
+
+    counter = 0;
+    for (int y = 0; y < 9; y++){
+        for (int x = 0; x < 8; x++){
+            // Dealing with nodes in centre of tile
+            this->nodeCoords[counter].val1 = x * 40;
+            this->nodeCoords[counter].val2 = (y-1) * 40;
+
+            // Corner nodes
+            if (y < 8){
+                this->nodeCoords[counter+8].val1 = (x+1) * 20;
+                this->nodeCoords[counter+8].val2 = y * 20;
+            }
+            counter++;
+        }
+        counter = y * 15;
+    }
+
+
+    for (int i = 0; i < 113; i++){
+        std::cout << i << " | " << this->nodeCoords[i].first() << " " << this->nodeCoords[i].second() << std::endl;
+    }
+}
+
+Pair<short, short> Graph::getNodeCoord(int nodeId)
+{
+    return this->nodeCoords[nodeId];
 }
 
 void Graph::insertEdge(int OriginNodeId, int destNodeId, int distance)
@@ -175,7 +202,6 @@ void Graph::setNodeAsOccupied(char column, short row)
     short columnNum = 72 - int(column);
     row = 15 * (8 - row);
     short nodeId = columnNum + row;
-    std::cout << nodeId << std::endl;
 
     for (int i = 0; i < this->adjListSize[nodeId]; ++i){
         this->adjList[nodeId][i].distance = SHRT_MAX;
