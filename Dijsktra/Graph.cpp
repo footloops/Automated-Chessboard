@@ -64,8 +64,8 @@ Graph::Graph()
 
             // Corner nodes
             if (y < 8){
-                this->nodeCoords[counter+8].val1 = (x+1) * 20;
-                this->nodeCoords[counter+8].val2 = y * 20;
+                this->nodeCoords[counter+8].val1 = (x * 40) + 20;
+                this->nodeCoords[counter+8].val2 = ((y-1) * 40) + 20;
             }
             counter++;
         }
@@ -256,34 +256,41 @@ int Graph::getShortestPathLen(){
     return this->shortestPathLen;
 }
 
-// int main(){
-//     Graph graph = Graph();
+int main(){
+    Graph graph = Graph();
 
-//     for (int i = 0; i < 113; ++i){
-//         std::cout << i << " | ";
-//         for (int j = 0; j < 8; ++j){
-//             std::cout << graph.adjList[i][j].getNodeId() << " " << graph.adjList[i][j].getDistance() << " | ";
-//         }
-//         std::cout << std::endl;
-//     }
+    for (int i = 0; i < 113; ++i){
+        std::cout << i << " | ";
+        for (int j = 0; j < 8; ++j){
+            std::cout << graph.adjList[i][j].getNodeId() << " " << graph.adjList[i][j].getDistance() << " | ";
+        }
+        std::cout << std::endl;
+    }
 
-//     //graph.setNodeAsOccupied('F', 1);
-//     //graph.setNodeAsOcupied(8);
+    //graph.setNodeAsOccupied('F', 1);
+    //graph.setNodeAsOcupied(8);
 
-//     // for (int i = 0; i < 113; ++i){
-//     //     std::cout << i << " | ";
-//     //     for (int j = 0; j < 8; ++j){
-//     //         std::cout << graph.adjList[i][j].getNodeId() << " " << graph.adjList[i][j].getDistance() << " | ";
-//     //     }
-//     //     std::cout << std::endl;
-//     // }
+    // for (int i = 0; i < 113; ++i){
+    //     std::cout << i << " | ";
+    //     for (int j = 0; j < 8; ++j){
+    //         std::cout << graph.adjList[i][j].getNodeId() << " " << graph.adjList[i][j].getDistance() << " | ";
+    //     }
+    //     std::cout << std::endl;
+    // }
 
-//     // graph.findShortestPath(0, 24);
-//     // for (int i = graph.getnumOfNodes() - graph.getShortestPathLen(); i < graph.getnumOfNodes(); ++i)
-//     // {
-//     //     std::cout << graph.shortestPath[i] << " ";
-//     // }
-//     // std::cout << std::endl;
+    graph.findShortestPath(48, 56);
+    for (int i = graph.getnumOfNodes() - graph.getShortestPathLen(); i < graph.getnumOfNodes(); ++i)
+    {   
+        std::cout << graph.shortestPath[i] << " " << graph.nodeCoords[graph.shortestPath[i]].first() << " " << graph.nodeCoords[graph.shortestPath[i]].second() << " | ";
+    }
+    std::cout << std::endl;
 
-//     return 0;
-// }
+    // graph.findShortestPath(0, 36);
+    // for (int i = graph.getnumOfNodes() - graph.getShortestPathLen(); i < graph.getnumOfNodes(); ++i)
+    // {
+    //     std::cout << graph.shortestPath[i] << " ";
+    // }
+    // std::cout << std::endl;
+
+    return 0;
+}
